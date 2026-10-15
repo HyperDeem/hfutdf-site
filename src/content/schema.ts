@@ -8,7 +8,7 @@ const common = {
   title: z.string().trim().min(1, '标题不能为空'),
   category_id: z.enum(categoryIds),
   status: z.enum(['draft','published']).default('draft'),
-  demo: z.literal(true).default(true),
+  demo: z.boolean().default(true),
   order: z.number().int().nonnegative().default(100),
   summary: z.string().trim().optional(),
   note: z.string().trim().optional(),
@@ -21,7 +21,7 @@ const record = z.discriminatedUnion('type', [
   z.strictObject({...common, type:z.literal('article')}),
   z.strictObject({...common, type:z.literal('file'), url:localPath.optional()}),
   z.strictObject({...common, type:z.literal('link'), url:z.url().refine(value => value.startsWith('https://'), '外链仅允许 HTTPS').optional()}),
-  z.strictObject({...common, type:z.literal('video'), event:z.string().trim().min(1).nullable().default(null)}),
+  z.strictObject({...common, type:z.literal('video'), event:z.string().trim().min(1).nullable().default(null),url:localPath.optional()}),
   z.strictObject({...common, type:z.literal('photo_album'), images:z.array(z.strictObject({src:localPath,alt:z.string().trim().min(1),caption:z.string().optional()})).min(1, '相册至少有一张图像')}),
   z.strictObject({...common, type:z.literal('tool'), action:z.enum(['open','download','external']),url:localPath.optional()}),
 ]);

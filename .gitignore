@@ -2,5 +2,7 @@ node_modules/
 dist/
 .astro/
 incoming/
+public/local/
+docs/screenshots/local-acceptance/
 .env*
 *.log

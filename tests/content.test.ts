@@ -6,8 +6,9 @@ const base={title:'模拟资料',category_id:'books',type:'article'};
 test('草稿和模拟标记默认值；未知作者与日期可留空',()=>{
  const parsed=entrySchema.parse({...base,source_credit:null,published_at:null});assert.equal(parsed.status,'draft');assert.equal(parsed.demo,true);
 });
-test('拒绝无效分类、类型配对、未知字段及真实内容标记',()=>{
- for(const data of [{...base,category_id:'invalid'},{...base,category_id:'photos'},{...base,rights_status:'x'},{...base,demo:false},{...base,title:'  '}])assert.equal(entrySchema.safeParse(data).success,false);
+test('拒绝无效分类、类型配对和未知字段；支持明确标记的本地真实资料',()=>{
+ for(const data of [{...base,category_id:'invalid'},{...base,category_id:'photos'},{...base,rights_status:'x'},{...base,title:'  '}])assert.equal(entrySchema.safeParse(data).success,false);
+ assert(entrySchema.safeParse({...base,demo:false}).success);
 });
 test('不自动补赛事；单张相册有效、空相册无效',()=>{
  const video=entrySchema.parse({title:'录像',category_id:'videos',type:'video'});assert.equal('event' in video&&video.event,null);
