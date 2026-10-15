@@ -1,0 +1,5 @@
+---
+import type {Entry} from '../data/demo';
+const {items} = Astro.props as {items:Entry[]};
+---
+{items.length ? <ul class="resource-list">{items.map((item,i)=><li><span class="row-number">{String(i+1).padStart(2,'0')}</span><div class="row-copy"><h3>{item.title}</h3>{item.note && <p>{item.note}</p>}</div>{item.href?<a class="row-action" href={item.href}>{item.action}<span aria-hidden="true"> ↗</span></a>:<button class="row-action" data-demo={item.title}>{item.action}<span aria-hidden="true"> ↗</span></button>}</li>)}</ul>:<div class="empty"><span>留一页空白，等下一份积累。</span><p>这里暂时没有资料。此分类用于演示空状态。</p><a href="/#resources">浏览其他资料 →</a></div>}

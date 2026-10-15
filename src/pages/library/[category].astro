@@ -1,0 +1,10 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import EntryList from '../../components/EntryList.astro';
+import {categories,entries,albums,videos} from '../../data/demo';
+export function getStaticPaths(){return categories.map(c=>({params:{category:c.id},props:{category:c}}));}
+const {category:c}=Astro.props;
+---
+<Layout title={c.name}><div class="wrap library"><a class="breadcrumb" href="/#resources">资料首页</a><span class="breadcrumb"> / {c.name}</span><div class="page-heading"><p class="eyebrow">资料馆 / 模拟内容</p><h1>{c.name}</h1><p>{c.detail}</p></div><nav class="category-nav" aria-label="资料分类">{categories.map(cat=><a href={`/library/${cat.id}/`} aria-current={cat.id===c.id?'page':undefined}>{cat.name}</a>)}</nav>
+{c.id==='photos'?<><div class="list-heading"><h2>主题相册</h2><span>2 个模拟相册</span></div><div class="album-grid">{albums.map((a,i)=><a class="album-card" href={`/photos/${a.slug}/`}><img src={`/images/demo-${i+1}.svg`} alt="抽象几何占位图，非真实照片"/><h3>{a.title} <span>↗</span></h3><p>{a.count} 张模拟图像</p></a>)}</div></>:c.id==='videos'? videos.map(v=><section class="event-group"><div class="list-heading"><h2>{v.event || '赛事待考证'}</h2><span>1 条模拟录像</span></div><EntryList items={[{title:v.title,note:'模拟内容 · 暂未接入媒体',action:'查看录像',href:`/videos/${v.slug}/`}]}/></section>):<><div class="list-heading"><h2>全部资料</h2><span>{(entries[c.id]||[]).length} 条模拟资料</span></div><EntryList items={entries[c.id]||[]}/></>}
+<p class="page-note">仅用于体验版式与交互，以上均不代表真实收录资料。</p></div></Layout>

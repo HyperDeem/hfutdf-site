@@ -1,0 +1,17 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import {albums} from '../../data/demo';
+export function getStaticPaths(){return albums.map(a=>({params:{slug:a.slug},props:{album:a}}));}
+const {album:a}=Astro.props;
+---
+<Layout title={a.title}><div class="wrap detail"><a class="breadcrumb" href="/library/photos/">← 返回照片</a><div class="page-heading"><p class="eyebrow">主题相册 · {a.count} 张模拟图像</p><h1>{a.title}</h1><p>抽象图形用于演示浏览体验，不是真实活动照片。点击图像可放大。</p></div><div class="photo-grid">{Array.from({length:a.count},(_,i)=><button class="photo-button" data-photo={`/images/demo-${i+1}.svg`} aria-label={`放大第 ${i+1} 张模拟图像`}><img src={`/images/demo-${i+1}.svg`} alt={`模拟图像 ${i+1}：抽象几何占位画面`} loading="lazy"/><span>模拟图像 {String(i+1).padStart(2,'0')} <span>放大 ↗</span></span></button>)}</div></div>
+<dialog id="lightbox" aria-label="相册放大预览"><div class="lightbox-toolbar"><span id="photo-count" aria-live="polite"></span><button id="photo-close" aria-label="关闭相册">×</button></div><img id="large-photo" alt="模拟抽象图形，非真实照片"/><div class="lightbox-controls"><button id="prev-photo" aria-label="上一张">←</button><span>模拟图像 · 左右方向键切换 · Esc 关闭</span><button id="next-photo" aria-label="下一张">→</button></div></dialog>
+<script>
+ const box=document.querySelector<HTMLDialogElement>('#lightbox')!;const buttons=[...document.querySelectorAll<HTMLButtonElement>('[data-photo]')];let index=0;
+ const prev=document.querySelector<HTMLButtonElement>('#prev-photo')!, next=document.querySelector<HTMLButtonElement>('#next-photo')!;
+ function update(){document.querySelector<HTMLImageElement>('#large-photo')!.src=buttons[index].dataset.photo!;document.querySelector('#photo-count')!.textContent=`${index+1} / ${buttons.length} · 模拟相册`;prev.hidden=next.hidden=buttons.length===1;}
+ function move(step:number){index=(index+step+buttons.length)%buttons.length;update();}
+ buttons.forEach((b,i)=>b.addEventListener('click',()=>{index=i;update();box.showModal();}));
+ prev.addEventListener('click',()=>move(-1));next.addEventListener('click',()=>move(1));document.querySelector('#photo-close')!.addEventListener('click',()=>box.close());box.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1);});
+ let touchX=0;box.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX;},{passive:true});box.addEventListener('touchend',e=>{const delta=e.changedTouches[0].clientX-touchX;if(Math.abs(delta)>50)move(delta<0?1:-1);},{passive:true});
+</script></Layout>
