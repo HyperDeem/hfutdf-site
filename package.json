@@ -1,1 +1,26 @@
-{"name":"debate-library-prototype","private":true,"version":"0.1.0","type":"module","scripts":{"dev":"node scripts/astro.mjs dev --host 127.0.0.1","build":"node scripts/astro.mjs build","preview":"node scripts/astro.mjs preview --host 127.0.0.1","check":"node scripts/astro.mjs check"},"dependencies":{"astro":"^7.3.8"},"devDependencies":{"@astrojs/check":"^0.9.4","typescript":"^5.9.0"}}
+{
+  "name": "debate-library-prototype",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/astro.mjs dev --host 127.0.0.1",
+    "build": "node scripts/build.mjs",
+    "preview": "node scripts/astro.mjs preview --host 127.0.0.1",
+    "check": "node scripts/astro.mjs check",
+    "content:check": "node scripts/validate-content.ts",
+    "verify": "node scripts/verify.mjs",
+    "test": "node --test tests/content.test.ts",
+    "test:workflow": "node tests/workflow.mjs",
+    "prepare": "node scripts/prepare-incoming.mjs"
+  },
+  "dependencies": {
+    "astro": "^7.3.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/node": "^24.19.2",
+    "typescript": "^5.9.0",
+    "yaml": "^2.9.1"
+  }
+}

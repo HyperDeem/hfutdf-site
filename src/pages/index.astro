@@ -1,9 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
-import {categories} from '../data/demo';
+import {categories} from '../data/categories';
+import {publishedEntries,entryUrl} from '../lib/entries';
+const featuredVideo=(await publishedEntries()).find(e=>e.data.type==='video');
 ---
 <Layout><section class="hero wrap"><p class="eyebrow">思考 · 表达 · 传承</p><h1>好的思考，<br/>值得被<span>留下。</span></h1><p class="hero-copy">从一次交锋，到一份积累。<br class="mobile-only"/>让辩论的经验，继续生长。</p><a class="pill" href="#resources">探索资料 <span aria-hidden="true">↓</span></a><p class="hero-caption">一个留给后来者的资料空间 · 文案示例</p></section>
 <section id="resources" class="resources"><div class="wrap"><div class="section-title"><h2>从这里，找到你需要的。</h2><span>七大资料入口</span></div><div class="category-grid">{categories.map((c,i)=><a class="category-card" href={`/library/${c.id}/`}><div class="category-top"><Icon name={c.icon}/><span>{String(i+1).padStart(2,'0')}</span></div><h3>{c.name}</h3><p>{c.summary}</p><span class="category-arrow" aria-hidden="true">↗</span></a>)}</div></div></section>
-<section class="film"><div class="wrap film-grid"><div><p class="eyebrow">比赛影像 / MATCH ARCHIVE</p><h2>观点会交锋。<br/>思考会留下。</h2><p>回到赛场，重新听见每一次发问。<br/>按赛事浏览，循着论证再走一遍。</p><a href="/library/videos/">浏览比赛视频 <span aria-hidden="true">↗</span></a></div><a class="film-cover" href="/videos/demo-match/" aria-label="查看模拟比赛录像"><span class="cover-top">DEBATE / ARCHIVE <span>模拟封面</span></span><span class="play-symbol" aria-hidden="true">▷</span><span class="cover-bottom"><strong>每一场交锋，都是新的起点。</strong><span>录像详情演示 · 暂未接入媒体 ↗</span></span></a></div></section>
+<section class="film"><div class="wrap film-grid"><div><p class="eyebrow">比赛影像 / MATCH ARCHIVE</p><h2>观点会交锋。<br/>思考会留下。</h2><p>回到赛场，重新听见每一次发问。<br/>按赛事浏览，循着论证再走一遍。</p><a href="/library/videos/">浏览比赛视频 <span aria-hidden="true">↗</span></a></div><a class="film-cover" href={featuredVideo?entryUrl(featuredVideo):'/library/videos/'} aria-label="查看模拟比赛录像"><span class="cover-top">DEBATE / ARCHIVE <span>模拟封面</span></span><span class="play-symbol" aria-hidden="true">▷</span><span class="cover-bottom"><strong>每一场交锋，都是新的起点。</strong><span>录像详情演示 · 暂未接入媒体 ↗</span></span></a></div></section>
 </Layout>

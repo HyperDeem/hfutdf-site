@@ -1,0 +1,11 @@
+---
+import {render} from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import {categories} from '../../data/categories';
+import {publishedEntries,titleOf} from '../../lib/entries';
+export async function getStaticPaths(){return (await publishedEntries()).filter(e=>e.data.type==='article').map(entry=>({params:{slug:entry.id},props:{entry}}));}
+const {entry}=Astro.props;
+const category=categories.find(c=>c.id===entry.data.category_id)!;
+const {Content}=await render(entry);
+---
+<Layout title={titleOf(entry)}><article class="article wrap"><a class="breadcrumb" href={`/library/${category.id}/`}>← 返回{category.name}</a><p class="eyebrow">{category.name} · 模拟文章</p><h1>{entry.data.title}</h1>{entry.data.summary&&<p class="article-lead">{entry.data.summary}</p>}<p class="article-meta">模拟阅读材料{entry.data.source_credit&&` · ${entry.data.source_credit}`}{entry.data.published_at&&` · ${entry.data.published_at}`}</p><Content/><a class="article-return" href={`/library/${category.id}/`}>继续浏览{category.name} →</a></article></Layout>

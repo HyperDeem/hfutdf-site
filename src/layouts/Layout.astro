@@ -1,16 +1,16 @@
 ---
 import '../styles/global.css';
 import Icon from '../components/Icon.astro';
-import {categories} from '../data/demo';
+import {categories} from '../data/categories';
 const {title='辩论知识博客'} = Astro.props;
 ---
-<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="description" content="辩论知识博客阶段一，本地模拟原型。"/><title>{title} · 本地原型</title></head><body>
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="description" content="辩论知识博客阶段二，本地内容流程演示。"/><title>{title} · 本地原型</title></head><body>
 <a class="skip" href="#main">跳到正文</a>
 <header><nav class="nav wrap" aria-label="主导航"><a class="brand" href="/"><span class="brand-mark" aria-hidden="true">辩</span>辩论知识博客<span class="draft">暂定名</span></a><div class="nav-links"><a href="/#resources">探索资料</a><a href="/library/videos/">比赛视频</a></div><div class="nav-actions"><button class="search-button" data-search aria-label="搜索（功能待确认）"><Icon name="search"/></button><button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="展开导航">☰</button></div></nav><div id="mobile-nav" hidden>{categories.map(c=><a href={`/library/${c.id}/`}>{c.name}</a>)}</div></header>
-<div class="prototype">阶段 1 本地原型 <span>·</span> 所有资料与图像均为模拟内容</div>
+<div class="prototype">阶段 2 本地演示 <span>·</span> 所有资料与图像均为模拟内容</div>
 <main id="main"><slot/></main>
 <footer><div class="wrap"><div class="footer-top"><div><strong>把积累留下，让后来者走得更远。</strong><p>个人维护的辩论学习与资料空间。非学校或院系官方服务。</p></div><a href="/#resources">探索七大资料 →</a></div><div class="footer-bottom"><span>辩论知识博客 · 暂定名称</span><span>站外联系 / 投稿方式待站长填写</span><span>本地视觉与交互原型</span></div></div></footer>
-<dialog id="feedback" aria-labelledby="feedback-title"><div class="dialog-head"><h2 id="feedback-title">模拟操作</h2><button data-close aria-label="关闭提示">×</button></div><p id="feedback-text"></p><button class="pill" data-close>知道了</button></dialog>
+<dialog id="feedback" aria-labelledby="feedback-title"><div class="dialog-head"><h2 id="feedback-title">模拟操作</h2><button data-close aria-label="关闭提示"><Icon name="close"/></button></div><p id="feedback-text"></p><button class="pill" data-close>知道了</button></dialog>
 <script>
  const feedback=document.querySelector<HTMLDialogElement>('#feedback')!;
  document.querySelectorAll<HTMLButtonElement>('[data-demo], [data-search]').forEach(b=>b.addEventListener('click',()=>{document.querySelector('#feedback-text')!.textContent=b.hasAttribute('data-search')?'搜索功能待站长确认；本阶段没有启用站内搜索。':`这是“${b.dataset.demo || b.textContent?.trim()}”的模拟操作。尚未接入真实文件、工具或外部地址，本次不会下载或跳转。`;feedback.showModal();}));

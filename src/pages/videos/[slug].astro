@@ -1,7 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import {videos} from '../../data/demo';
-export function getStaticPaths(){return videos.map(v=>({params:{slug:v.slug},props:{video:v}}));}
-const {video:v}=Astro.props;
+import {publishedEntries,titleOf} from '../../lib/entries';
+export async function getStaticPaths(){return (await publishedEntries()).filter(e=>e.data.type==='video').map(entry=>({params:{slug:entry.id},props:{entry}}));}
+const {entry}=Astro.props;
+if(entry.data.type!=='video')throw new Error('录像内容类型不正确');
+const v=entry.data;
 ---
-<Layout title={v.title}><div class="wrap detail"><a class="breadcrumb" href="/library/videos/">← 返回比赛视频</a><div class="page-heading"><p class="eyebrow">{v.event || '赛事待考证'}</p><h1>{v.title}</h1><p>录像详情示例。赛事信息、参赛方与拍摄日期均未提供。</p></div><div class="player-placeholder"><span class="play-symbol" aria-hidden="true">▷</span><h2>暂未接入媒体</h2><p>这里是播放器区域示意，没有真实比赛录像。</p></div><div class="detail-actions"><button class="pill" data-demo="下载原视频">下载原视频（模拟） ↓</button><p>本阶段仅验证页面与反馈；播放和进度拖动留待媒体阶段。</p></div></div></Layout>
+<Layout title={titleOf(entry)}><div class="wrap detail"><a class="breadcrumb" href="/library/videos/">← 返回比赛视频</a><div class="page-heading"><p class="eyebrow">{v.event || '赛事待考证'}</p><h1>{titleOf(entry)}</h1><p>{v.summary||'录像详情示例。赛事信息、参赛方与拍摄日期均未提供。'}</p></div><div class="player-placeholder"><span class="play-symbol" aria-hidden="true">▷</span><h2>暂未接入媒体</h2><p>这里是播放器区域示意，没有真实比赛录像。</p></div><div class="detail-actions"><button class="pill" data-demo="下载原视频">下载原视频（模拟） ↓</button><p>本阶段仅验证页面与反馈；播放和进度拖动留待媒体阶段。</p></div></div></Layout>
