@@ -7,5 +7,6 @@ docs/screenshots/local-acceptance/
 docs/screenshots/visual-refinement/
 docs/screenshots/home-directed/
 docs/screenshots/archive-chapter/
+docs/screenshots/legacy-epilogue/
 .env*
 *.log

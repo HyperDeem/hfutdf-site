@@ -1,10 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Icon from '../components/Icon.astro';
-import ArchiveChapter from '../components/ArchiveChapter.astro';
+import LegacyEpilogue from '../components/LegacyEpilogue.astro';
 import {categories} from '../data/categories';
 ---
 <Layout><section class="hero wrap"><p class="eyebrow">思考 · 表达 · 传承</p><h1><span class="hero-line">好的思考，</span><span class="hero-line">值得被<span class="hero-accent">留下。</span></span></h1><p class="hero-copy">从一次交锋，到一份积累。<br class="mobile-only"/>让辩论的经验，继续生长。</p><a class="pill" href="#resources">探索资料 <span aria-hidden="true">↓</span></a></section>
 <section id="resources" class="resources"><div class="wrap resources-wrap"><div class="section-title"><h2>从这里，找到你需要的。</h2><span>七大资料入口</span></div><div class="category-grid">{categories.map(c=><a class="category-card" href={`/library/${c.id}/`}><div class="category-top"><Icon name={c.icon}/></div><h3>{c.name}</h3><p>{c.summary}</p></a>)}</div></div></section>
-<ArchiveChapter/>
+<LegacyEpilogue/>
 </Layout>

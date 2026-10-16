@@ -1,0 +1,51 @@
+<section class="legacy-epilogue" aria-labelledby="legacy-heading">
+ <div class="wrap legacy-content" data-legacy-reveal>
+  <h2 id="legacy-heading"><span>每一届都会毕业。</span><span>但经验可以继续传递。</span></h2>
+  <p class="legacy-description">把走过的路留下，让后来的人走得更远。</p>
+  <div class="legacy-action">
+   <button class="legacy-contribute" type="button" disabled aria-describedby="contribution-note">参与资料共建</button>
+   <p id="contribution-note">站外联系方式待补充</p>
+  </div>
+ </div>
+</section>
+
+<style>
+ .legacy-epilogue{min-height:640px;min-height:clamp(640px,76svh,800px);padding:112px 0;background:var(--dark);color:#f5f5f7;display:flex;align-items:center;text-align:center}
+ .legacy-content{max-width:1000px}
+ h2{font-size:52px;line-height:1.45;font-weight:600;letter-spacing:0}
+ h2 span{display:block}
+ h2 span+span{margin-top:8px}
+ .legacy-description{font-size:20px;line-height:1.9;color:#c7c7cc;margin:30px auto 0;text-wrap:balance}
+ .legacy-action{margin-top:36px}
+ .legacy-contribute{min-height:48px;border:1px solid #77777e;border-radius:var(--pill);background:transparent;color:#d2d2d7;padding:10px 26px;font-size:16px;line-height:1.7;cursor:default}
+ .legacy-contribute:active{transform:none}
+ #contribution-note{font-size:14px;line-height:1.8;color:#b9b9bf;margin-top:12px}
+ @media(prefers-reduced-motion:no-preference){
+  [data-legacy-reveal]{transition:opacity .65s ease,transform .65s cubic-bezier(.2,.65,.3,1)}
+  .legacy-epilogue[data-reveal="pending"] [data-legacy-reveal]{opacity:0;transform:translateY(16px)}
+ }
+ @media(max-width:833px){
+  .legacy-epilogue{min-height:620px;min-height:max(620px,74svh);padding:88px 0}
+  h2{font-size:32px;line-height:1.6}
+  h2 span+span{margin-top:4px}
+  .legacy-description{max-width:19em;font-size:17px;margin-top:26px}
+  .legacy-action{margin-top:32px}
+  .legacy-contribute{font-size:15px}
+  #contribution-note{font-size:13px}
+ }
+ @media(max-width:359px){h2{font-size:28px}}
+</style>
+
+<script>
+ const epilogue=document.querySelector<HTMLElement>('.legacy-epilogue');
+ const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+ if(epilogue && !reducedMotion.matches && 'IntersectionObserver' in window){
+  const reveal=()=>{epilogue.dataset.reveal='visible';observer.disconnect();};
+  const observer=new IntersectionObserver(entries=>{
+   if(entries.some(entry=>entry.isIntersecting))reveal();
+  },{threshold:.15,rootMargin:'0px 0px -48px 0px'});
+  epilogue.dataset.reveal='pending';
+  observer.observe(epilogue);
+  reducedMotion.addEventListener('change',event=>{if(event.matches)reveal();});
+ }
+</script>
