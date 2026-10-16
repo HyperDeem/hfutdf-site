@@ -105,3 +105,27 @@ body>main{flex:1 0 auto}
  .empty p{font-size:14px}
 }
 @media(prefers-reduced-motion:reduce){.category-card{transition:none}.category-card:active{transform:none}}
+
+/* Directed homepage iteration: wordmark and a more relaxed Chinese headline. */
+.category-card p{text-wrap:balance}
+.hero{padding:44px 0 34px}
+.hero h1{font-size:60px;line-height:1.32;font-weight:600;letter-spacing:0}
+.hero h1 .hero-line{display:block;color:var(--ink)}
+.hero h1 .hero-line:first-child{font-size:.92em;margin-bottom:8px}
+.hero h1 .hero-accent{color:var(--blue)}
+.hero-copy{margin:24px 0}
+.releases-note{font-size:14px;color:var(--muted);line-height:1.8;margin:-4px 0 24px}
+@media(max-width:833px){
+ .brand{font-size:15px;font-weight:600;letter-spacing:0}
+ .nav{gap:12px}
+ .nav-actions{flex-shrink:0}
+ .hero{padding:28px 0 28px}
+ .hero h1{font-size:40px;line-height:1.42;font-weight:600}
+ .hero h1 .hero-line:first-child{font-size:.95em;margin-bottom:4px}
+ .hero-copy{font-size:16px;margin:20px 0;line-height:1.85}
+ .hero-copy .mobile-only{display:block}
+ .archive-status strong{font-size:25px;overflow-wrap:anywhere}
+ .releases-note{font-size:14px}
+ .event-group .resource-list li{flex-wrap:wrap}
+ .event-group .row-copy{flex-basis:100%}
+}
