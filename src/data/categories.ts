@@ -1,10 +1,10 @@
 export const categories = [
- {id:'academic',name:'专业资料',icon:'document',summary:'让知识，走出课堂。',detail:'课程学习与专业实践的参考材料。'},
- {id:'photos',name:'照片',icon:'photo',summary:'把片刻，留给后来。',detail:'按主题收集的小相册，一张也值得留下。'},
- {id:'books',name:'图书资料',icon:'book',summary:'从一本书，走向更远。',detail:'书单、笔记与阅读资源，在这里相遇。'},
- {id:'videos',name:'比赛视频',icon:'play',summary:'重回交锋的现场。',detail:'按赛事整理录像，尚不明确的记录等待考证。'},
- {id:'debate-learning',name:'辩论学习资料',icon:'chat',summary:'每一次表达，都有积累。',detail:'从论点到论证，从准备到复盘。'},
- {id:'team-work',name:'辩论队工作材料',icon:'folder',summary:'让下一次筹备，更从容。',detail:'把工作中的方法与经验，留给下一位。'},
- {id:'tools',name:'其他工具',icon:'tool',summary:'小工具，帮一点忙。',detail:'实用的小程序和脚本，直接按名称列举。'},
+ {id:'academic',name:'专业资料',icon:'document',summary:'课程学习与专业参考',detail:'查找课程学习与专业实践的参考资料。'},
+ {id:'photos',name:'照片',icon:'photo',summary:'比赛与活动主题相册',detail:'按主题浏览相册，查看比赛与活动照片。'},
+ {id:'books',name:'图书资料',icon:'book',summary:'图书文件与阅读笔记',detail:'查找图书文件、书单和阅读笔记。'},
+ {id:'videos',name:'比赛视频',icon:'film',summary:'赛事收录，播放暂缓',detail:'按赛事查看收录信息，暂未开放播放与下载。'},
+ {id:'debate-learning',name:'辩论学习资料',icon:'chat',summary:'辩论方法与备赛参考',detail:'查找辩论方法、备赛参考和复盘资料。'},
+ {id:'team-work',name:'辩论队工作材料',icon:'folder',summary:'队务文档与工作模板',detail:'查找队务文档、比赛筹备表和工作模板。'},
+ {id:'tools',name:'其他工具',icon:'tool',summary:'打开或下载实用工具',detail:'按名称查找工具，直接打开或下载使用。'},
 ];
 export const categoryIds = ['academic','photos','books','videos','debate-learning','team-work','tools'] as const;

@@ -2,4 +2,4 @@
 const {name='document'} = Astro.props;
 const paths: Record<string,string>={document:'M7 3h7l4 4v14H7z M14 3v5h4 M10 12h5 M10 16h5',photo:'M3 5h18v14H3z M3 16l5-6 5 5 3-3 5 5 M16 8h.01',book:'M12 6C8 3 4 4 2 5v15c3-2 6-2 10 0 4-2 7-2 10 0V5c-3-1-6-2-10 1z M12 6v14',play:'M9 7l9 5-9 5z M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',chat:'M21 11a8 8 0 0 1-8 8H9l-6 3 2-6a8 8 0 1 1 16-5z M8 10h8 M8 14h5',folder:'M3 6h7l2 3h9v12H3z M3 6V3h6l3 3h8v3',tool:'M14 4a6 6 0 0 0-7 7L2 17a3 3 0 0 0 4 4l6-6a6 6 0 0 0 8-7l-4 4-4-4z',search:'M20 20l-5-5 M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0'};
 ---
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={name==='close'?'M6 6l12 12 M18 6L6 18':paths[name] || paths.document}/></svg>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={name==='close'?'M6 6l12 12 M18 6L6 18':name==='film'?'M3 3h18v18H3z M7 3v18 M17 3v18 M3 8h4 M3 16h4 M17 8h4 M17 16h4':paths[name] || paths.document}/></svg>

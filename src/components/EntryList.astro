@@ -2,4 +2,4 @@
 import type {EntryRow} from '../lib/entries';
 const {items} = Astro.props as {items:EntryRow[]};
 ---
-{items.length ? <ul class="resource-list">{items.map((item,i)=><li><span class="row-number">{String(i+1).padStart(2,'0')}</span><div class="row-copy"><h3>{item.title}</h3>{item.note && <p>{item.note}</p>}</div>{item.href?<a class="row-action" href={item.href} download={item.download}>{item.action}<span aria-hidden="true"> ↗</span></a>:<button class="row-action" data-demo={item.title}>{item.action}<span aria-hidden="true"> ↗</span></button>}</li>)}</ul>:<div class="empty"><span>留一页空白，等下一份积累。</span><p>这里暂时没有资料。此分类暂无已展示条目。</p><a href="/#resources">浏览其他资料 →</a></div>}
+{items.length ? <ul class="resource-list">{items.map(item=><li><div class="row-copy"><h3>{item.title}</h3>{item.note && <p>{item.note}</p>}</div>{item.unavailable?<span class="row-unavailable">{item.action}</span>:item.href?<a class="row-action" href={item.href} download={item.download}>{item.action}</a>:<button class="row-action" data-demo={item.title}>{item.action}</button>}</li>)}</ul>:<div class="empty"><span>暂无资料</span><p>此分类暂时没有已展示的资料。</p><a href="/#resources">浏览其他资料</a></div>}

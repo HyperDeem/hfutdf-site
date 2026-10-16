@@ -4,5 +4,6 @@ dist/
 incoming/
 public/local/
 docs/screenshots/local-acceptance/
+docs/screenshots/visual-refinement/
 .env*
 *.log

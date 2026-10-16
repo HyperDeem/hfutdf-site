@@ -1,7 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import {publishedEntries,titleOf} from '../../lib/entries';
-export async function getStaticPaths(){return (await publishedEntries()).filter(e=>e.data.type==='video').map(entry=>({params:{slug:entry.id},props:{entry}}));}
+import {videoPublicationEnabled} from '../../lib/publication';
+export async function getStaticPaths(){return videoPublicationEnabled?(await publishedEntries()).filter(e=>e.data.type==='video').map(entry=>({params:{slug:entry.id},props:{entry}})):[];}
 const {entry}=Astro.props;
 if(entry.data.type!=='video')throw new Error('录像内容类型不正确');
 const v=entry.data;
