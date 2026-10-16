@@ -6,5 +6,6 @@ public/local/
 docs/screenshots/local-acceptance/
 docs/screenshots/visual-refinement/
 docs/screenshots/home-directed/
+docs/screenshots/archive-chapter/
 .env*
 *.log
