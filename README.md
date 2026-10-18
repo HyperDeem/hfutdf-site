@@ -44,4 +44,4 @@ docs/PROJECT_BASELINE.md 可公开的需求摘要
 
 维护者有权授权的原创代码采用 [MIT](LICENSE)，署名 `HyperDeem`；排除范围见 [LICENSE_SCOPE.md](LICENSE_SCOPE.md)。该许可不覆盖第三方资料、商标和设计规范。`private: true` 防止 npm 误发布，与 GitHub Public 计划无关。
 
-创建 GitHub 仓库、添加 remote、首次 push、CloudBase 购买与连接、域名绑定、自动部署和网站公开均需维护者另行批准。当前分支仍为 master，未来默认 main 的切换另行确认；本轮没有任何 remote。
+创建 GitHub 仓库、添加 remote、首次 push、CloudBase 购买与连接、域名绑定、自动部署和网站公开均需维护者另行批准。本地默认分支为 `main`，保留已脱敏的提交历史；当前没有任何 remote。
