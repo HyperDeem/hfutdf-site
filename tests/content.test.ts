@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
 import { entrySchema } from '../src/content/schema.ts';
-import { readEntries } from '../scripts/validate-content.ts';
+import { readEntries, readEntriesFrom } from '../scripts/validate-content.ts';
 const base={title:'模拟资料',category_id:'books',type:'article'};
 test('草稿和模拟标记默认值；未知作者与日期可留空',()=>{
  const parsed=entrySchema.parse({...base,source_credit:null,published_at:null});assert.equal(parsed.status,'draft');assert.equal(parsed.demo,true);
@@ -25,4 +26,10 @@ test('日期必须有效，不能默默更正无效日期',()=>{
 test('当前内容目录可校验，不限制条目数量或要求分类必须有内容',()=>{
  const entries=readEntries();assert.equal(new Set(entries.map(e=>e.id)).size,entries.length);
  for(const entry of entries)assert(entrySchema.safeParse(entry.data).success,entry.id);
+});
+
+test('虚构示例仅从测试目录读取，生产目录为空',()=>{
+ const fixtureRoot=new URL('./fixtures/',import.meta.url);
+ const samples=readEntriesFrom(fileURLToPath(new URL('entries/',fixtureRoot)),fileURLToPath(new URL('public/',fixtureRoot)));
+ assert.equal(samples.length,2);assert(samples.every(e=>e.data.demo));assert.equal(readEntries().length,0);
 });

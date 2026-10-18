@@ -1,4 +1,4 @@
-import { readFileSync, existsSync, readdirSync, writeFileSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { readEntries, projectRoot } from './validate-content.ts';
@@ -19,6 +19,8 @@ function inspect(directory:string){for(const file of readdirSync(directory,{with
  const full=path.join(directory,file.name);
  if(file.isDirectory())inspect(full);else if(file.name.endsWith('.html')){
   pageCount++;const html=readFileSync(full,'utf8');
+  assert(!html.includes('SYNTHETIC_TEST_ONLY'),'测试示例进入产物');
+  assert(!/\b(?:href|src)=["'](?:\/local\/|https:\/\/github\.com\/[^"']*\/releases|[^"']*\.(?:zip|rar|7z)(?:[?#][^"']*)?)["']/i.test(html),'产物包含未批准的资源入口');
   if(!videoPublicationEnabled){
    assert(!/<video\b|<source\b/i.test(html),`暂停公开时不能出现视频播放器：${full}`);
    assert(!/\b(?:href|src)="(?:\/videos\/|[^"<>]*\.(?:mp4|m4v|mov|webm|ogv|m3u8)(?:[?#][^"<>]*)?")/i.test(html),`暂停公开时不能出现视频播放或下载地址：${full}`);
@@ -31,5 +33,6 @@ function inspect(directory:string){for(const file of readdirSync(directory,{with
 }}
 inspect(dist);
 const report={pages:pageCount,checkedLocalLinks:linkCount,videoPublicationEnabled,published:published.map(e=>({id:e.id,category:e.data.category_id,type:e.data.type})),drafts:entries.filter(e=>e.data.status==='draft').map(e=>e.id),checks:['schema','local assets exist','seven category pages','draft detail pages absent','detail pages match publication policy','built internal links resolve',...(!videoPublicationEnabled?['no video players or playback links','video source copies excluded from output']:[])]};
-writeFileSync(path.join(projectRoot,'docs/build-review.json'),JSON.stringify(report,null,2)+'\n');
-console.log(`静态产物审查通过：${pageCount} 页，${linkCount} 个站内引用；报告 docs/build-review.json。`);
+mkdirSync(path.join(projectRoot,'.local-reports'),{recursive:true});
+writeFileSync(path.join(projectRoot,'.local-reports/build-review.json'),JSON.stringify(report,null,2)+'\n');
+console.log(`静态产物审查通过：${pageCount} 页，${linkCount} 个站内引用；报告 .local-reports/build-review.json。`);

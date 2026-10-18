@@ -2,13 +2,13 @@ import { readFileSync, readdirSync, statSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'yaml';
+import {assertPublicFiles,assertProductionEntries} from './publication-policy.ts';
 import { entrySchema, type EntryData } from '../src/content/schema.ts';
 
 export const projectRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const publicRoot=path.join(projectRoot,'public');
 export type ContentRecord={id:string;data:EntryData;body:string};
-export function readEntries():ContentRecord[]{
-  const directory=path.join(projectRoot,'src/content/entries');
+export function readEntriesFrom(directory:string,assetsRoot:string):ContentRecord[]{
   return readdirSync(directory).filter(name=>name.endsWith('.md')).sort().map(name=>{
     try{
       const id=name.slice(0,-3);
@@ -21,13 +21,20 @@ export function readEntries():ContentRecord[]{
       if(data.type==='article'&&!body)throw new Error('文章正文不能为空');
       const assets=data.type==='photo_album'?data.images.map(image=>image.src):('url' in data&&data.type!=='link'&&data.url?[data.url]:[]);
       for(const asset of assets){
-        const target=realpathSync(path.join(publicRoot,asset.slice(1)));
-        const relative=path.relative(realpathSync(publicRoot),target);
+        const target=realpathSync(path.join(assetsRoot,asset.slice(1)));
+        const relative=path.relative(realpathSync(assetsRoot),target);
         if(relative.startsWith('..')||path.isAbsolute(relative)||!statSync(target).isFile())throw new Error(`本地资源必须是 public 内的文件：${asset}`);
       }
       return {id,data,body};
     }catch(error){throw new Error(`${name}: ${error instanceof Error?error.message:String(error)}`);}
   });
+}
+export function readEntries():ContentRecord[]{
+  const approval=JSON.parse(readFileSync(path.join(projectRoot,'config/publication.json'),'utf8'));
+  const entries=readEntriesFrom(path.join(projectRoot,'src/content/entries'),publicRoot);
+  assertProductionEntries(entries,approval.approvedEntryIds);
+  assertPublicFiles(publicRoot,approval.approvedPublicFiles);
+  return entries;
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
   try{const entries=readEntries();console.log(`内容校验通过：${entries.length} 条，${entries.filter(e=>e.data.status==='published').length} 条展示，${entries.filter(e=>e.data.status==='draft').length} 条草稿。`);}

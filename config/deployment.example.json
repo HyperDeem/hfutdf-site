@@ -1,0 +1,27 @@
+{
+  "baselineVersion": "1.2",
+  "status": "local-only",
+  "executionEnabled": false,
+  "github": {
+    "plannedRepositoryName": "hfutdf-site",
+    "plannedVisibility": "public",
+    "repositoryUrl": null,
+    "creationApproved": false,
+    "firstPushApproved": false
+  },
+  "provider": null,
+  "region": null,
+  "websiteOrigin": null,
+  "mediaOrigin": null,
+  "release": {
+    "approved": false,
+    "automaticDeploymentApproved": false,
+    "matchDownloadsApproved": false
+  },
+  "build": {
+    "installCommand": "npm ci",
+    "verifyCommand": "npm run verify",
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist"
+  }
+}

@@ -10,3 +10,46 @@ docs/screenshots/archive-chapter/
 docs/screenshots/legacy-epilogue/
 .env*
 *.log
+
+# Local audit evidence and backups can contain private metadata.
+.local-audit/
+.local-backups/
+# Credentials and local cloud/hosting state (never publish).
+!.env.example
+.env.example.local
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+id_rsa*
+id_ed25519*
+.aws/
+.azure/
+.tencentcloud/
+.cloudbase/
+.tcb/
+.netlify/
+.vercel/
+credentials.json
+service-account*.json
+# Raw media and resource archives require an explicit publication review.
+*.mp4
+*.m4v
+*.mov
+*.webm
+*.avi
+*.mkv
+*.m3u8
+*.m4s
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+
+# Private evidence and local-only resources never enter the public candidate.
+.local-data/
+.local-reports/
+.private/
+*.bundle
