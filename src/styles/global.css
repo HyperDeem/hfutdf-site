@@ -36,7 +36,15 @@ body>main{flex:1 0 auto}
 .film .eyebrow{font-size:12px;letter-spacing:1px;color:#c7c7cc}
 .footer-top p{font-size:13px;line-height:1.8}
 .footer-top>a{font-size:14px}
-.footer-bottom{font-size:12px;line-height:1.8}
+.footer-bottom{font-size:12px;line-height:1.8;align-items:flex-end;flex-wrap:wrap}
+.footer-contact{min-width:0;display:flex;flex-direction:column}
+.footer-contact>span{color:var(--muted)}
+.footer-contact>a{font-size:14px;color:var(--ink);overflow-wrap:anywhere}
+.footer-registration{margin:0;font-size:12px;line-height:1.8}
+.footer-contact>a,.footer-registration a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;padding:4px 0;text-underline-offset:3px}
+.footer-registration a{color:var(--muted);overflow-wrap:anywhere}
+.footer-contact>a:hover,.footer-contact>a:focus-visible{color:var(--blue);text-decoration:underline}
+.footer-registration a:hover,.footer-registration a:focus-visible{color:var(--ink);text-decoration:underline}
 .library{min-height:0;padding:24px 0 56px}
 .breadcrumbs{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:14px;color:var(--muted);line-height:1.6;min-height:44px}
 .breadcrumbs a{display:inline-flex;align-items:center;min-height:44px}
@@ -90,7 +98,7 @@ body>main{flex:1 0 auto}
  .cover-bottom>span{font-size:13px}
  .footer-top p{font-size:13px}
  .footer-top strong{font-size:15px;line-height:1.7}
- .footer-bottom{font-size:12px}
+ .footer-bottom{font-size:12px;align-items:flex-start}
  .library{min-height:0;padding:16px 0 44px}
  .page-heading{padding:12px 0 24px}
  .page-heading>p:last-child{font-size:15px;line-height:1.8}

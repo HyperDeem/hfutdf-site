@@ -1,10 +1,9 @@
 <section class="legacy-epilogue" aria-labelledby="legacy-heading">
  <div class="wrap legacy-content" data-legacy-reveal>
-  <h2 id="legacy-heading"><span>每一届都会毕业。</span><span>但经验可以继续传递。</span></h2>
+  <h2 id="legacy-heading"><span>每一届都会毕业，</span><span>但经验可以继续传递。</span></h2>
   <p class="legacy-description">把走过的路留下，让后来的人走得更远。</p>
   <div class="legacy-action">
-   <button class="legacy-contribute" type="button" disabled aria-describedby="contribution-note">参与资料共建</button>
-   <p id="contribution-note">站外联系方式待补充</p>
+   <a class="legacy-contribute" href="mailto:1147782858@qq.com?subject=%E3%80%90%E6%9C%BA%E6%A2%B0%E5%B7%A5%E7%A8%8B%E8%BE%A9%E8%AE%BA%E9%98%9F%E4%BB%93%E5%BA%93%E3%80%91%E8%B5%84%E6%96%99%E6%8A%95%E7%A8%BF">参与资料共建</a>
   </div>
  </div>
 </section>
@@ -17,9 +16,10 @@
  h2 span+span{margin-top:8px}
  .legacy-description{font-size:20px;line-height:1.9;color:#c7c7cc;margin:30px auto 0;text-wrap:balance}
  .legacy-action{margin-top:36px}
- .legacy-contribute{min-height:48px;border:1px solid #77777e;border-radius:var(--pill);background:transparent;color:#d2d2d7;padding:10px 26px;font-size:16px;line-height:1.7;cursor:default}
+ .legacy-contribute{display:inline-flex;align-items:center;justify-content:center;min-height:48px;border:1px solid #77777e;border-radius:var(--pill);background:transparent;color:#d2d2d7;padding:10px 26px;font-size:16px;line-height:1.7;text-decoration:none}
+ .legacy-contribute:hover{border-color:#c7c7cc;background:rgba(255,255,255,.06);color:#fff}
+ .legacy-contribute:focus-visible{outline-color:var(--sky)}
  .legacy-contribute:active{transform:none}
- #contribution-note{font-size:14px;line-height:1.8;color:#b9b9bf;margin-top:12px}
  @media(prefers-reduced-motion:no-preference){
   [data-legacy-reveal]{transition:opacity .65s ease,transform .65s cubic-bezier(.2,.65,.3,1)}
   .legacy-epilogue[data-reveal="pending"] [data-legacy-reveal]{opacity:0;transform:translateY(16px)}
@@ -31,7 +31,6 @@
   .legacy-description{max-width:19em;font-size:17px;margin-top:26px}
   .legacy-action{margin-top:32px}
   .legacy-contribute{font-size:15px}
-  #contribution-note{font-size:13px}
  }
  @media(max-width:359px){h2{font-size:28px}}
 </style>

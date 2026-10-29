@@ -11,7 +11,13 @@ const pageTitle=title===siteName?siteName:`${title} · ${siteName}`;
 <header><nav class="nav wrap" aria-label="主导航"><a class="brand" href="/">{siteName}</a><div class="nav-links"><a href="/#resources">探索资料</a><a href="/library/videos/">比赛记录</a></div><div class="nav-actions"><button class="search-button" data-search aria-label="搜索（功能待确认）"><Icon name="search"/></button><button class="menu-button" aria-expanded="false" aria-controls="mobile-nav" aria-label="展开导航">☰</button></div></nav><div id="mobile-nav" hidden>{categories.map(c=><a href={`/library/${c.id}/`}>{c.name}</a>)}</div></header>
 <div class="prototype">本地安全预览 <span>·</span> 当前暂无已获准公开的资料</div>
 <main id="main"><slot/></main>
-<footer><div class="wrap"><div class="footer-top"><div><strong>把积累留下，让后来者走得更远。</strong><p>个人维护的辩论学习与资料空间。非学校或院系官方服务。</p></div><a href="/#resources">探索七大资料 →</a></div><div class="footer-bottom"><span>{siteName}</span><span>站外联系 / 投稿方式待站长填写</span><span>本地视觉与交互原型</span></div></div></footer>
+<footer><div class="wrap">
+ <div class="footer-top"><div><strong>{siteName}</strong><p>个人维护的辩论学习与资料空间，非学校或院系官方服务。</p></div><a href="/#resources">探索七大资料 →</a></div>
+ <div class="footer-bottom">
+  <div class="footer-contact"><span>资料投稿与联系</span><a href="mailto:1147782858@qq.com">1147782858@qq.com</a></div>
+  <div class="footer-registration"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">皖ICP备2026037346号</a></div>
+ </div>
+</div></footer>
 <dialog id="feedback" aria-labelledby="feedback-title"><div class="dialog-head"><h2 id="feedback-title">模拟操作</h2><button data-close aria-label="关闭提示"><Icon name="close"/></button></div><p id="feedback-text"></p><button class="pill" data-close>知道了</button></dialog>
 <script>
  const feedback=document.querySelector<HTMLDialogElement>('#feedback')!;
