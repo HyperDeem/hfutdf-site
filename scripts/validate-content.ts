@@ -2,7 +2,6 @@ import { readFileSync, readdirSync, statSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'yaml';
-import {assertPublicFiles,assertProductionEntries} from './publication-policy.ts';
 import { entrySchema, type EntryData } from '../src/content/schema.ts';
 
 export const projectRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
@@ -31,10 +30,7 @@ export function readEntriesFrom(directory:string,assetsRoot:string):ContentRecor
   });
 }
 export function readEntries():ContentRecord[]{
-  const approval=JSON.parse(readFileSync(path.join(projectRoot,'config/publication.json'),'utf8'));
   const entries=readEntriesFrom(path.join(projectRoot,'src/content/entries'),publicRoot);
-  assertProductionEntries(entries,approval.approvedEntryIds);
-  assertPublicFiles(publicRoot,approval.approvedPublicFiles);
   return entries;
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){

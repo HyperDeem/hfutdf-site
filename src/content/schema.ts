@@ -1,7 +1,7 @@
 import { z } from 'astro/zod';
 import { categoryIds } from '../data/categories.ts';
 
-// Keep local fixtures compatible; only the archive's public origin is trusted.
+// Local paths and public COS resource addresses.
 export const localPath = z.string().regex(/^\/(?!\/)(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_.-]+\/?$/, '使用站内绝对路径，例如 /files/example.txt；不接受远程地址或查询串')
   .refine(value => !value.split('/').some(part => part === '.' || part === '..'), '路径不能包含 . 或 ..');
 export const archiveUrl = z.string().refine(value => {
@@ -18,7 +18,6 @@ const common = {
   title: z.string().trim().min(1, '标题不能为空'),
   category_id: z.enum(categoryIds),
   status: z.enum(['draft','published']).default('draft'),
-  demo: z.boolean().default(true),
   order: z.number().int().nonnegative().default(100),
   summary: z.string().trim().optional(),
   note: z.string().trim().optional(),
@@ -38,6 +37,5 @@ const record = z.discriminatedUnion('type', [
 export const entrySchema = record.superRefine((data,ctx) => {
   const allowed:Record<string,string[]> = {academic:['article','file','link'],books:['article','file','link'],'debate-learning':['article','file','link'],'team-work':['article','file','link'],photos:['photo_album'],videos:['video'],tools:['tool']};
   if(!allowed[data.category_id].includes(data.type)) ctx.addIssue({code:'custom',path:['type'],message:'资料类型与所属分类不匹配'});
-  if(data.type==='tool' && data.action==='external' && data.url) ctx.addIssue({code:'custom',path:['url'],message:'阶段 2 外部工具仅模拟，请留空 url'});
 });
 export type EntryData = z.infer<typeof entrySchema>;

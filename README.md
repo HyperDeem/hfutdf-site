@@ -17,24 +17,20 @@ npm run dev
 
 ## 内容与构建
 
-生产内容仅从 `src/content/entries/` 读取，结构保持不变；目前没有获准资料，七大分类正常显示空状态。`tests/fixtures/` 仅含虚构测试示例，不参与网站内容加载，也不复制到 public 或 dist。
+资料从 `src/content/entries/*.md` 读取，使用现有 schema 校验标题、分类、日期和资源地址。`status: published` 的条目出现在对应分类；空目录与有资料的目录均可构建，不需要批准清单或模拟标记。
 
-`config/publication.json` 是维护者批准的条目和静态文件清单，目前均为空。构建前会拒绝未批准文件、生产测试示例及比赛媒体/压缩包；直接启动 Astro 也执行检查。清单只是发布选择机制，不替代人工版权、隐私或备案审查。
+资源可以引用 `public/` 下的站内文件，或 `https://files.hfutdf.top` 上的 COS 文件。照片通过 images 数组组织，可用 archive_url 下载整册 ZIP。站长在上传中控确认后直接生成 Markdown、验证构建并提交发布。
 
-真实资料不得放入 public；`.gitignore` 无法阻止静态复制。真实资料、原始验收日志、内部审计报告与旧截图在私有本地备份中，不是公开仓库的一部分。不要把它们补交来“修复”构建。
-
-比赛记录栏目保留中性介绍，暂不提供播放、预览、下载或下载外链；原播放器源代码处于关闭状态。首页保留“宣言 → 目录 → 传承尾声”，不含比赛专题。不开发登录、评论、后台、数据库或在线投稿。
+构建检查只验证资料结构、资源路径和生成页面的链接，不进行内容审批。首页、分类和相册布局沿用现有实现。
 
 ## 结构
 
 ```text
 src/                     现有页面、组件、样式和内容 schema
-src/content/entries/     经批准的生产内容，当前为空
-public/                  经批准的静态文件，当前为空
-config/publication.json  维护者批准清单
+src/content/entries/     Markdown 资料条目
+public/                  站内静态资源
 scripts/                 内容校验、构建和静态产物检查
-tests/fixtures/          虚构测试数据，不进入生产
-.github/                 Issue / PR 模板，无自动部署工作流
+.github/                 Issue / PR 模板与既有自动部署工作流
 docs/PROJECT_BASELINE.md 可公开的需求摘要
 ```
 
