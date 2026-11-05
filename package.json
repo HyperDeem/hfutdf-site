@@ -10,7 +10,7 @@
     "check": "node scripts/astro.mjs check",
     "content:check": "node scripts/validate-content.ts",
     "verify": "node scripts/verify.mjs",
-    "test": "node --test tests/content.test.ts tests/cos.test.ts tests/media-probe.test.mjs",
+    "test": "node --test tests/content.test.ts tests/cos.test.ts tests/search.test.ts tests/media-probe.test.mjs",
     "prepare": "node scripts/prepare-incoming.mjs"
   },
   "dependencies": {

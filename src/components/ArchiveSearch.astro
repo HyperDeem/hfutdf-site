@@ -1,0 +1,44 @@
+---
+import Icon from './Icon.astro';
+---
+<div class="archive-search">
+ <button class="search-button" id="search-toggle" aria-label="搜索资料" aria-expanded="false" aria-controls="archive-search-results"><Icon name="search"/></button>
+ <div id="search-field" hidden><label class="search-label" for="archive-query">搜索资料</label><input id="archive-query" type="search" placeholder="搜索标题、文件名或描述" autocomplete="off"/><button id="search-close" aria-label="关闭搜索">×</button></div>
+</div>
+<section id="archive-search-results" hidden aria-label="资料搜索结果"><div class="wrap"><p id="search-status" role="status" aria-live="polite"></p><ul id="search-results"></ul></div></section>
+<script>
+ import {searchRecords,type SearchRecord} from '../lib/search';
+ const toggle=document.querySelector<HTMLButtonElement>('#search-toggle')!;
+ const field=document.querySelector<HTMLElement>('#search-field')!;
+ const input=document.querySelector<HTMLInputElement>('#archive-query')!;
+ const panel=document.querySelector<HTMLElement>('#archive-search-results')!;
+ const status=document.querySelector<HTMLElement>('#search-status')!;
+ const results=document.querySelector<HTMLUListElement>('#search-results')!;
+ let pending:Promise<SearchRecord[]>|undefined;let generation=0;
+ function load(){return pending??=(fetch('/search-index.json').then(response=>{if(!response.ok)throw new Error();return response.json() as Promise<SearchRecord[]>;}).catch(error=>{pending=undefined;throw error;}));}
+ function close(){generation++;field.hidden=true;panel.hidden=true;toggle.hidden=false;toggle.setAttribute('aria-expanded','false');toggle.closest('.nav')?.classList.remove('search-expanded');input.value='';results.replaceChildren();toggle.focus();}
+ async function update(){
+  const request=++generation;results.replaceChildren();
+  if(!input.value.trim()){status.textContent='输入标题、原始文件名或描述';return;}
+  status.textContent='正在查找…';
+  try{
+   const records=await load();if(request!==generation)return;
+   const matches=searchRecords(records,input.value);status.textContent=matches.length?'':'没有找到相关资料';
+   for(const record of matches){const li=document.createElement('li');const link=document.createElement('a');link.href=record.href;const title=document.createElement('strong');title.textContent=record.title;const description=document.createElement('p');description.textContent=record.description;link.append(title,description);link.addEventListener('click',()=>{close();setTimeout(locateTarget,0);});li.append(link);results.append(li);}
+  }catch{if(request===generation)status.textContent='搜索数据加载失败，请重新输入以重试';}
+ }
+ toggle.addEventListener('click',()=>{toggle.hidden=true;field.hidden=false;panel.hidden=false;toggle.setAttribute('aria-expanded','true');toggle.closest('.nav')?.classList.add('search-expanded');input.focus();void update();});
+ document.querySelector('#search-close')!.addEventListener('click',close);
+ input.addEventListener('input',()=>void update());
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!field.hidden)close();});
+ let highlightTimer:ReturnType<typeof setTimeout>|undefined;
+ function locateTarget(){
+  let id='';try{id=decodeURIComponent(location.hash.slice(1));}catch{return;}
+  if(!id.startsWith('resource-'))return;
+  const target=document.getElementById(id);if(!target)return;
+  document.querySelectorAll('.search-target').forEach(el=>el.classList.remove('search-target'));
+  target.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  target.classList.add('search-target');clearTimeout(highlightTimer);highlightTimer=setTimeout(()=>target.classList.remove('search-target'),3000);
+ }
+ window.addEventListener('hashchange',locateTarget);requestAnimationFrame(locateTarget);
+</script>
