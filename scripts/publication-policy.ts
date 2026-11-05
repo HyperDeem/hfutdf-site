@@ -25,7 +25,7 @@ export function assertProductionEntries(entries:readonly ContentRecord[],approve
  for(const entry of entries){
   if(entry.data.demo)throw new Error('测试示例不得放入生产内容目录');
   if(!approvedIds.includes(entry.id))throw new Error('生产条目未经维护者批准');
-  if(entry.data.category_id==='videos'&&'url' in entry.data&&entry.data.url)throw new Error('比赛记录暂不开放资源地址');
+  if(entry.data.category_id==='videos'&&'url' in entry.data&&entry.data.url&&!entry.data.url.startsWith('https://files.hfutdf.top/'))throw new Error('比赛资源仅允许 COS 地址');
  }
  for(const id of approvedIds)if(!entries.some(entry=>entry.id===id))throw new Error('批准清单引用缺失条目');
 }

@@ -13,6 +13,7 @@ export function toRow(entry:ContentEntry):EntryRow{
   const d=entry.data;
   if(d.type==='article')return {title:titleOf(entry),note:d.note||(d.demo?'阅读 · 模拟文章':'阅读'),action:'阅读',href:entryUrl(entry)};
   if(d.type==='video'){
+    if(d.url?.startsWith('https://files.hfutdf.top/'))return {title:titleOf(entry),note:d.note||'',action:'下载',href:d.url,download:true};
     return {title:titleOf(entry),note:d.note||'比赛文字记录',action:'暂不开放资源',unavailable:true};
   }
   const action=d.type==='file'?'下载':d.type==='link'?'访问链接':d.type==='tool'?{open:'打开',download:'下载',external:'访问链接'}[d.action]:'查看';
