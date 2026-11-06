@@ -7,5 +7,5 @@ status: published
 order: 100
 published_at: '2026-11-05'
 type: file
-url: https://files.hfutdf.top/archive/academic/academic-c67d006b89e3-1/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86%20v2.3.pdf
+url: https://6866-hfutdf-sit-d9gfdn1tceb76d862-1508124540.tcb.qcloud.la/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86%20v2.3.pdf
 ---

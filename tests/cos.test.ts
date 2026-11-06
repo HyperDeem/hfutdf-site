@@ -4,6 +4,10 @@ import {entrySchema} from '../src/content/schema.ts';
 test('COS 文件和相册兼容已有模型，其他 origin 和签名地址仍被拒绝',()=>{
  const base={title:'资料',category_id:'academic',type:'file',status:'published'};
  assert(entrySchema.safeParse({...base,url:'https://files.hfutdf.top/archive/academic/a/%E4%B8%AD.pdf'}).success);
+ const cloudbase='https://6866-hfutdf-sit-d9gfdn1tceb76d862-1508124540.tcb.qcloud.la';
+ assert(entrySchema.safeParse({...base,url:cloudbase+'/%E5%A4%A7%E5%AD%A6%E7%89%A9%E7%90%86%20v2.3.pdf'}).success);
+ for(const url of [cloudbase+'.evil.example/a.pdf','https://other.tcb.qcloud.la/a.pdf',cloudbase+'/a.pdf?signature=x',cloudbase+'/a/../a.pdf'])
+  assert(!entrySchema.safeParse({...base,url}).success,url);
  for(const url of ['https://evil.example/x.pdf','https://files.hfutdf.top.evil.example/x','https://files.hfutdf.top/x?sign=x','https://user@files.hfutdf.top/x','https://files.hfutdf.top/a/../x','https://files.hfutdf.top/%2e%2e/x'])
   assert(!entrySchema.safeParse({...base,url}).success,url);
  assert(entrySchema.safeParse({title:'相册',category_id:'photos',type:'photo_album',

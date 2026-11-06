@@ -1,18 +1,24 @@
 import { z } from 'astro/zod';
 import { categoryIds } from '../data/categories.ts';
 
-// Local paths and public COS resource addresses.
+// Local paths and public archive resource addresses.
 export const localPath = z.string().regex(/^\/(?!\/)(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_.-]+\/?$/, '使用站内绝对路径，例如 /files/example.txt；不接受远程地址或查询串')
   .refine(value => !value.split('/').some(part => part === '.' || part === '..'), '路径不能包含 . 或 ..');
+const archiveOrigins = [
+  'https://files.hfutdf.top',
+  'https://6866-hfutdf-sit-d9gfdn1tceb76d862-1508124540.tcb.qcloud.la',
+];
 export const archiveUrl = z.string().refine(value => {
   try {
+    const origin = archiveOrigins.find(origin => value.startsWith(`${origin}/`));
+    if (!origin) return false;
     const u = new URL(value);
-    const decoded = decodeURIComponent(value.slice('https://files.hfutdf.top'.length));
-    return u.origin === 'https://files.hfutdf.top' && !u.username && !u.password && !u.search && !u.hash &&
+    const decoded = decodeURIComponent(value.slice(origin.length));
+    return u.origin === origin && !u.username && !u.password && !u.search && !u.hash &&
       u.pathname.length > 1 && !decoded.includes('\\') && !/[\u0000-\u001f]/.test(decoded) &&
       !decoded.split('/').some(p => p === '.' || p === '..') && !/%(?:2e|2f|5c)/i.test(value);
   } catch { return false; }
-}, '资源必须是 files.hfutdf.top 上不含签名参数的 HTTPS 地址');
+}, '资源必须是已配置的 COS 或 CloudBase 域名上不含签名参数的 HTTPS 地址');
 export const resourcePath = z.union([localPath, archiveUrl]);
 const common = {
   title: z.string().trim().min(1, '标题不能为空'),

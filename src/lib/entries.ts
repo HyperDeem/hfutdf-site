@@ -17,6 +17,6 @@ export function toRow(entry:ContentEntry):EntryRow{
     return {id:`resource-${entry.id}`,title:titleOf(entry),note:d.summary??d.note??'比赛文字记录',action:'暂不开放资源',unavailable:true};
   }
   const action=d.type==='file'?'下载':d.type==='link'?'访问链接':d.type==='tool'?{open:'打开',download:'下载',external:'访问链接'}[d.action]:'查看';
-  const href=(d.type==='file' || (d.type==='tool'&&d.action!=='external'))?d.url:undefined;
+  const href=(d.type==='file' || d.type==='link' || (d.type==='tool'&&d.action!=='external'))?d.url:undefined;
   return {id:`resource-${entry.id}`,title:titleOf(entry),note:d.summary??d.note??'',action,href,download:d.type==='file'||(d.type==='tool'&&d.action==='download')};
 }

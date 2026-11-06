@@ -20,7 +20,8 @@ export function readEntriesFrom(directory:string,assetsRoot:string):ContentRecor
       if(data.type==='article'&&!body)throw new Error('文章正文不能为空');
       const assets=data.type==='photo_album'?data.images.map(image=>image.src):('url' in data&&data.type!=='link'&&data.url?[data.url]:[]);
       for(const asset of assets){
-        if(asset.startsWith('https://files.hfutdf.top/'))continue;
+        // Remote origins have already been checked by entrySchema.
+        if(asset.startsWith('https://'))continue;
         const target=realpathSync(path.join(assetsRoot,asset.slice(1)));
         const relative=path.relative(realpathSync(assetsRoot),target);
         if(relative.startsWith('..')||path.isAbsolute(relative)||!statSync(target).isFile())throw new Error(`本地资源必须是 public 内的文件：${asset}`);
