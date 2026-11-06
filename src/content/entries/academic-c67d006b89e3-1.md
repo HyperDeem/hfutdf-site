@@ -1,6 +1,6 @@
 ---
 title: 大学物理 v2.3
-summary: 这玩意真的挺难
+summary: "教科书 这玩意真的挺难"
 note: 这玩意真的挺难
 category_id: academic
 status: published
