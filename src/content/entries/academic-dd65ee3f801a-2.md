@@ -1,7 +1,6 @@
 ---
 title: 概率论与数理统计 宁荣健 朱士信
-summary: 教科书
-note: 教科书
+summary: ""
 category_id: academic
 status: published
 order: 100

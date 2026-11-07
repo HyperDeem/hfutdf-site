@@ -1,7 +1,6 @@
 ---
 title: 电工学简明教程 第3版 秦曾煌主编
-summary: 教科书
-note: 教科书
+summary: ""
 category_id: academic
 status: published
 order: 100

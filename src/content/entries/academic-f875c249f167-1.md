@@ -1,7 +1,6 @@
 ---
 title: 电工学 上 电工技术 秦曾煌主编
-summary: 教科书
-note: 教科书
+summary: ""
 category_id: academic
 status: published
 order: 100

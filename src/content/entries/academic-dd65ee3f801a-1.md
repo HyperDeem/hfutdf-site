@@ -1,7 +1,6 @@
 ---
 title: 概率论与数理统计 宁荣健 朱士信 课本答案
-summary: 教科书习题答案
-note: 教科书习题答案
+summary: ""
 category_id: academic
 status: published
 order: 100
