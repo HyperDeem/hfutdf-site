@@ -1,6 +1,6 @@
 ---
 title: 用人要疑(1) (1)(1)
-category_id: debate-learning
+category_id: "team-work"
 status: published
 order: 100
 published_at: '2026-11-08'
