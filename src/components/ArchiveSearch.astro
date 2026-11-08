@@ -3,7 +3,7 @@ import Icon from './Icon.astro';
 ---
 <div class="archive-search">
  <button class="search-button" id="search-toggle" aria-label="搜索资料" aria-expanded="false" aria-controls="archive-search-results"><Icon name="search"/></button>
- <div id="search-field" hidden><label class="search-label" for="archive-query">搜索资料</label><input id="archive-query" type="search" placeholder="搜索标题、文件名或描述" autocomplete="off"/><button id="search-close" aria-label="关闭搜索">×</button></div>
+ <div id="search-field" hidden><label class="search-label" for="archive-query">搜索资料</label><input id="archive-query" type="search" placeholder="搜索标题、文件名、描述或子分类" autocomplete="off"/><button id="search-close" aria-label="关闭搜索">×</button></div>
 </div>
 <section id="archive-search-results" hidden aria-label="资料搜索结果"><div class="wrap"><p id="search-status" role="status" aria-live="polite"></p><ul id="search-results"></ul></div></section>
 <script>
@@ -19,7 +19,7 @@ import Icon from './Icon.astro';
  function close(){generation++;field.hidden=true;panel.hidden=true;toggle.hidden=false;toggle.setAttribute('aria-expanded','false');toggle.closest('.nav')?.classList.remove('search-expanded');input.value='';results.replaceChildren();toggle.focus();}
  async function update(){
   const request=++generation;results.replaceChildren();
-  if(!input.value.trim()){status.textContent='输入标题、原始文件名或描述';return;}
+  if(!input.value.trim()){status.textContent='输入标题、原始文件名、描述或子分类';return;}
   status.textContent='正在查找…';
   try{
    const records=await load();if(request!==generation)return;

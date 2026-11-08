@@ -1,5 +1,7 @@
 import { z } from 'astro/zod';
 import { categoryIds } from '../data/categories.ts';
+import { subcategories, type Subcategory } from '../data/subcategories.ts';
+export { parseSubcategories } from '../data/subcategories.ts';
 
 // Local paths and public archive resource addresses.
 export const localPath = z.string().regex(/^\/(?!\/)(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_.-]+\/?$/, '使用站内绝对路径，例如 /files/example.txt；不接受远程地址或查询串')
@@ -23,6 +25,7 @@ export const resourcePath = z.union([localPath, archiveUrl]);
 const common = {
   title: z.string().trim().min(1, '标题不能为空'),
   category_id: z.enum(categoryIds),
+  subcategory_id: z.string().optional(),
   status: z.enum(['draft','published']).default('draft'),
   order: z.number().int().nonnegative().default(100),
   summary: z.string().trim().optional(),
@@ -40,8 +43,14 @@ const record = z.discriminatedUnion('type', [
   z.strictObject({...common, type:z.literal('photo_album'), archive_url:archiveUrl.optional(), images:z.array(z.strictObject({src:resourcePath,alt:z.string().trim().min(1),caption:z.string().optional()})).min(1, '相册至少有一张图像')}),
   z.strictObject({...common, type:z.literal('tool'), action:z.enum(['open','download','external']),url:resourcePath.optional()}),
 ]);
-export const entrySchema = record.superRefine((data,ctx) => {
+export function createEntrySchema(items: Subcategory[]) {
+const parents = new Map(items.map(item => [item.id, item.category_id]));
+return record.superRefine((data,ctx) => {
   const allowed:Record<string,string[]> = {academic:['article','file','link'],books:['article','file','link'],'debate-learning':['article','file','link'],'team-work':['article','file','link'],photos:['photo_album'],videos:['video'],tools:['tool']};
   if(!allowed[data.category_id].includes(data.type)) ctx.addIssue({code:'custom',path:['type'],message:'资料类型与所属分类不匹配'});
+  if(data.subcategory_id !== undefined && parents.get(data.subcategory_id) !== data.category_id)
+    ctx.addIssue({code:'custom',path:['subcategory_id'],message:'子分类不存在或不属于当前大分类'});
 });
+}
+export const entrySchema = createEntrySchema(subcategories);
 export type EntryData = z.infer<typeof entrySchema>;

@@ -1,0 +1,12 @@
+---
+import LibraryPage from '../../../components/LibraryPage.astro';
+import {categories} from '../../../data/categories';
+import {subcategories} from '../../../data/subcategories';
+export function getStaticPaths(){
+  return subcategories.map(subcategory=>({
+    params:{category:subcategory.category_id,subcategory:subcategory.id},
+    props:{category:categories.find(category=>category.id===subcategory.category_id)!,subcategory},
+  }));
+}
+---
+<LibraryPage {...Astro.props}/>
