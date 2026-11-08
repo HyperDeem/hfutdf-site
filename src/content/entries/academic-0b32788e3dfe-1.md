@@ -1,6 +1,6 @@
 ---
 title: 专业必修课程
-category_id: academic
+category_id: "books"
 status: published
 order: 100
 published_at: '2026-11-07'
