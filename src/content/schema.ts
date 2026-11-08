@@ -46,7 +46,7 @@ const record = z.discriminatedUnion('type', [
 export function createEntrySchema(items: Subcategory[]) {
 const parents = new Map(items.map(item => [item.id, item.category_id]));
 return record.superRefine((data,ctx) => {
-  const allowed:Record<string,string[]> = {academic:['article','file','link'],books:['article','file','link'],'debate-learning':['article','file','link'],'team-work':['article','file','link'],photos:['photo_album'],videos:['video'],tools:['tool']};
+  const allowed:Record<string,string[]> = {academic:['article','file','link'],books:['article','file','link'],'debate-learning':['article','file','link'],'team-work':['article','file','link'],photos:['photo_album','file'],videos:['video','file'],tools:['tool']};
   if(!allowed[data.category_id].includes(data.type)) ctx.addIssue({code:'custom',path:['type'],message:'资料类型与所属分类不匹配'});
   if(data.subcategory_id !== undefined && parents.get(data.subcategory_id) !== data.category_id)
     ctx.addIssue({code:'custom',path:['subcategory_id'],message:'子分类不存在或不属于当前大分类'});
